@@ -127,7 +127,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     // MARK: - UI Event Handling
     
-    @IBAction func doneButtonTapped(_ sender: Any) {
+    func doneButtonTapped(_ sender: Any) {
         if let vc = presentingViewController as? FirstViewController {
           //before dismissing the Form ViewController, pass the data inside the closure
             dismiss(animated: true, completion: { [self] in
@@ -172,32 +172,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     @IBAction func nextButtonTapped(_ sender: Any) {
         guard !nextButton.isHidden && nextButton.isEnabled else { return }
         switchToNextState()
-    }
-    
-    @IBAction func addScanButtonTapped(_ sender: Any) {
-        guard state == .testing else { return }
-
-        let title = "Merge another scan?"
-        let message = """
-            Merging multiple scan results improves detection.
-            You can start a new scan now to merge into this one, or load an already scanned *.arobject file.
-            """
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Merge New Scan…", style: .default) { _ in
-            // Save the previously scanned object as the object to be merged into the next scan.
-            self.referenceObjectToMerge = self.testRun?.referenceObject
-            self.state = .startARSession
-        })
-        alertController.addAction(UIAlertAction(title: "Merge ARObject File…", style: .default) { _ in
-            // Show a document picker to choose an existing scan
-            self.showFilePickerForLoadingScan()
-        })
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true, completion: nil)
-        }
     }
     
     func showFilePickerForLoadingScan() {
@@ -542,8 +516,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     @objc
     func boundingBoxPositionOrExtentChanged(_ notification: Notification) {
-        guard let box = notification.object as? BoundingBox,
-            let cameraPos = sceneView.pointOfView?.simdWorldPosition else { return }
+        guard let box = notification.object as? BoundingBox//,
+            //let cameraPos = sceneView.pointOfView?.simdWorldPosition
+        else { return }
         
         let xString = String(format: "width: %.2f", box.extent.x)
         let yString = String(format: "height: %.2f", box.extent.y)
@@ -551,7 +526,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         length = box.extent.x
         width = box.extent.z
         height = box.extent.y
-        let distanceFromCamera = String(format: "%.2f m", distance(box.simdWorldPosition, cameraPos))
+        //let distanceFromCamera = String(format: "%.2f m", distance(box.simdWorldPosition, cameraPos))
         displayMessage("\(xString) \(yString) \(zString)", expirationTime: 1.5)
     }
     

@@ -13,8 +13,8 @@ extension ViewController {
     func setupNavigationBar() {
         backButton = UIBarButtonItem(title: "Back", style: .plain, target: self,
                                      action: #selector(previousButtonTapped(_:)))
-        mergeScanButton = UIBarButtonItem(title: "Merge Scans…", style: .plain, target: self,
-                                          action: #selector(addScanButtonTapped(_:)))
+        //mergeScanButton = UIBarButtonItem(title: "Merge Scans…", style: .plain, target: self,
+                                          //action: #selector(addScanButtonTapped(_:)))
         let startOverButton = UIBarButtonItem(title: "Restart", style: .plain, target: self,
                                               action: #selector(restartButtonTapped(_:)))
         let navigationItem = UINavigationItem(title: "Start")
