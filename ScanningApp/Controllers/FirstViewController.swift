@@ -19,8 +19,8 @@ class FirstViewController: UIViewController {
     }
         
     func sendValues(_ length: Float, _ width: Float, _ height: Float) {
-        lengthField.text = "\(length)"
-        widthField.text = "\(width)"
-        heightField.text = "\(height)"
+        lengthField.text = "\(length*100) cm"
+        widthField.text = "\(width*100) cm"
+        heightField.text = "\(height*100) cm"
     }
 }
